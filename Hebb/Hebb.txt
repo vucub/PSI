@@ -1,0 +1,129 @@
+//Hebb w pascalu
+
+unit sztuczny_neuron;
+ 
+interface
+ 
+uses
+Windows, Messages, Math, SysUtils, Classes, Graphics, Controls, Forms, Dialogs,
+StdCtrls;
+ 
+type
+TForm1 = class(TForm)
+Edit1: TEdit;
+Edit2: TEdit;
+Edit3: TEdit;
+Edit4: TEdit;
+Edit5: TEdit;
+Label1: TLabel;
+Label2: TLabel;
+Label3: TLabel;
+Label4: TLabel;
+Label5: TLabel;
+Label6: TLabel;
+Label7: TLabel;
+Edit6: TEdit;
+Label8: TLabel;
+Label9: TLabel;
+Edit7: TEdit;
+Edit8: TEdit;
+Label10: TLabel;
+Edit9: TEdit;
+Label11: TLabel;
+Edit10: TEdit;
+Label12: TLabel;
+GroupBox1: TGroupBox;
+RadioButton1: TRadioButton;
+RadioButton2: TRadioButton;
+RadioButton3: TRadioButton;
+RadioButton4: TRadioButton;
+RadioButton5: TRadioButton;
+Label13: TLabel;
+GroupBox2: TGroupBox;
+Button1: TButton;
+Edit11: TEdit;
+Label14: TLabel;
+procedure FormPaint(Sender: TObject);
+procedure Button1Click(Sender: TObject);
+private
+{ Private declarations }
+public
+{ Public declarations }
+end;
+ 
+var
+Form1: TForm1;
+x,w: Array [1..5] of Real;
+y,z,a: Real;
+ 
+implementation
+ 
+{$R *.DFM}
+ 
+procedure TForm1.FormPaint(Sender: TObject);
+begin
+sleep(100);
+Canvas.MoveTo(32,60);
+Canvas.LineTo(197,250);
+Canvas.MoveTo(120,60);
+Canvas.LineTo(199,250);
+Canvas.MoveTo(216,60);
+Canvas.LineTo(201,250);
+Canvas.MoveTo(304,60);
+Canvas.LineTo(203,250);
+Canvas.MoveTo(392,60);
+Canvas.LineTo(205,250);
+Canvas.MoveTo(201,280);
+Canvas.LineTo(201,320);
+end;
+ 
+procedure TForm1.Button1Click(Sender: TObject);
+var i:Integer;
+begin
+a:=StrToFloat(Edit11.Text);
+x[1]:=StrToFloat(Edit1.Text);
+x[2]:=StrToFloat(Edit2.Text);
+x[3]:=StrToFloat(Edit3.Text);
+x[4]:=StrToFloat(Edit4.Text);
+x[5]:=StrToFloat(Edit5.Text);
+w[1]:=StrToFloat(Edit6.Text);
+w[2]:=StrToFloat(Edit7.Text);
+w[3]:=StrToFloat(Edit8.Text);
+w[4]:=StrToFloat(Edit9.Text);
+w[5]:=StrToFloat(Edit10.Text);
+y:=0;
+for i:=1 to 5 do y:=y+x[i]*w[i];
+if RadioButton1.checked then z:=0.8*y+1;
+if RadioButton2.checked then
+begin
+if y>0 then z:=1 else
+if y<0 then z:=-1 else
+z:=0;
+end;
+if RadioButton3.checked then z:=1/(1+exp(-y));
+if RadioButton4.checked then z:=Tanh(y);
+if RadioButton5.checked then z:=exp(-y*y);
+ 
+for i:=1 to 5 do w[i]:=w[i]+a*x[i]*z;
+y:=0;
+for i:=1 to 5 do y:=y+x[i]*w[i];
+Edit6.Text:=FloatToStr(w[1]);
+Edit7.Text:=FloatToStr(w[2]);
+Edit8.Text:=FloatToStr(w[3]);
+Edit9.Text:=FloatToStr(w[4]);
+Edit10.Text:=FloatToStr(w[5]);
+if RadioButton1.checked then z:=0.8*y+1;
+if RadioButton2.checked then
+begin
+if y>0 then z:=1 else
+if y<0 then z:=-1 else
+z:=0;
+end;
+if RadioButton3.checked then z:=1/(1+exp(-y));
+if RadioButton4.checked then z:=Tanh(y);
+if RadioButton5.checked then z:=exp(-y*y);
+Label1.Caption:='y = ' + FloatToStr(y);
+Label13.Caption:='z = ' + FloatToStr(z);
+end;
+ 
+end.
